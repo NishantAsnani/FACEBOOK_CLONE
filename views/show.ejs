@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/mainpage.css">
+    <link rel="icon" type="image/x-icon" href="images/favicon.jpg">
+    <title>Main_page</title>
+</head>
+<body class="bg-slate-200"> 
+    <div class=" header bg-[#4267B2] w-[100%] h-[50px]">
+        <div class="search_pos flex justify-end translate-y-2 -translate-x-20  ">
+            <input type="text" name="" id="" placeholder="search" class="inline-block search text-center rounded-3xl px-5 py-1">
+            <div class=" icon translate-y-2 -translate-x-52"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.442 10.442a1 1 0 011.415 0l3.85 3.85a1 1 0 01-1.414 1.415l-3.85-3.85a1 1 0 010-1.415z" clip-rule="evenodd"></path><path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 100-11 5.5 5.5 0 000 11zM13 6.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z" clip-rule="evenodd"></path></svg></div>
+        </div>
+        <img src="images/Facebook_New_Logo_(2015).svg.png" class="h-[50px] -translate-y-[32px]" alt="">
+        <ul class=" -translate-y-2 h-[781px] w-2/12 absolute border-2 inline-block transition-transform duration-[0.5s]">
+            <img src="images/friends.png" class="items_image" alt=""><li class="items"> Friends </li> 
+            <img src="images/groups.png" class="items_image" alt=""><li class="items">Groups</li>
+            <img src="images/marketplace.png" class="items_image" alt=""><li class="items">Marketplace</li>
+            <img src="images/watch.png" class="items_image" alt=""><li class="items">Watch</li>
+            <img src="images/events.png" class="items_image" alt=""><li class="items ">Events</li>
+            <img src="images/memories.png" class="items_image" alt=""><li class="items">Memories</li>
+        </ul>
+ <div class="inline-block -transalte-y-full"> 
+ <div class="story_container ml-[270px] flex">
+
+    <div class="story">
+    <img src="images/disco.jpg" alt="" class="story_image">
+    </div>
+
+    <div class="story ml-4">
+        <img src="images/mountain.jpg" alt="" class="story_image">
+    </div>
+
+    <div class="story ml-4">
+        <img src="images/lady.jpg" alt="" class="story_image">
+    </div>
+
+
+    <div class="story ml-4">
+        <img src="images/car.jpg" alt="" class="story_image"> 
+    </div>
+
+    <div class="story ml-4">
+        <img src="images/insect.jpg" alt="" class="story_image">
+    </div>
+
+    <div class="story ml-4">
+        <img src="images/pizza.jpg" alt="" class="story_image">
+    </div>
+  
+</div>
+<div class="bg-white rounded-3xl shadow-gray-800 shadow-sm w-[798px] h-[150px]  ml-[270px] mt-[30px]">
+    <form action="/show" method="post" enctype="multipart/form-data" name="data">
+        <input type="text" name="description" id="" placeholder="What's on your mind" class="bg-gray-200 font-sans w-[700px] mt-[20px] ml-[80px] px-7 py-2 rounded-3xl">
+        <input type="file" name="data" id="upload" class="mt-[3px] hidden">
+        <label for="upload"><img src="images/image.png" class=" mt-[20px] ml-[120px] w-12 h-12" alt=""></label>
+        <button type="submit" class="font-sans bg-blue-600 text-white text-lg pt-2 font-semibold pb-2 w-24 rounded-lg relative bottom-12 left-3/4">Post</button>
+    </form>
+</div>
+</div>
+<div class="translate-x-72">
+    <div class="card bg-white  rounded-[20px] inline-block mt-2">
+        <div class="w-[360px] h-[70px] pb-2 mt-2 ml-2">
+            <img src="images/mountain_1.jpg" alt="" class="rounded-full  w-14 h-14">
+        </div>
+        <p class="ml-2 max-w-fit break-all text-xl font-mono">
+           Trekking is awesome  
+        </p>
+    <div class="image h-[300px]  mt-16 flex justify-center">
+        <img src="images/mountain_1.jpg" alt="" class="rounded-3xl w-[400px] -translate-y-10">
+    </div>
+    
+    <div class="bg-gray-300 w-[405px] h-[70px] -translate-y-9 rounded-[20px]">
+        <img src="images/like.png" class="cursor-pointer  w-8 mx-3  translate-y-1" alt="">
+        <div class="ml-3 mt-2 inline-block">0</div>
+    
+        <img src="images/comments.jpg" class="cursor-pointer  w-8 mx-44  -translate-y-[52px]" alt="">
+        <div class="ml-44 -translate-y-[47px] inline-block">0</div>
+        
+        <img src="images/share.jpg" class="cursor-pointer w-8 mx-[360px] -translate-y-[99px]" alt="">
+        <div class="ml-[360px] -translate-y-[90px] inline-block">0</div>
+
+
+
+        <div class="-translate-x-72">
+            <div class="card bg-white  rounded-[20px] inline-block mt-2">
+                <div class="w-[360px] h-[70px] pb-2 mt-2 ml-2">
+                    <img src="<%=Data.image%> " alt="" class="rounded-full w-14 h-14">
+                </div>
+                <p class="ml-2 max-w-fit break-all text-xl font-mono">
+                   <%=Data.description%>   
+                </p>
+            <div class="image h-[300px]  mt-16 flex justify-center">
+                <img src="<%=Data.image%> " alt="" class="rounded-3xl w-[400px] -translate-y-10">
+            </div>
+            
+            <div class="bg-gray-300 w-[405px] h-[70px] -translate-y-9 rounded-[20px]">
+                <img src="images/like.png" class="cursor-pointer  w-8 mx-3  translate-y-1 like_counter" alt="">
+                <div class="ml-3 mt-2 inline-block like_display">0</div>
+            
+                <img src="images/comments.jpg" class="cursor-pointer  w-8 mx-44  -translate-y-[52px]" alt="">
+                <div class="ml-44 -translate-y-[47px] inline-block comment_counter">0</div>
+                
+                <img src="images/share.jpg" class="cursor-pointer w-8 mx-[360px] -translate-y-[99px]" alt="">
+                <div class="ml-[360px] -translate-y-[90px] inline-block share_counter">0</div>
+
+                <div class="-translate-x-72">
+                    <div class="card bg-white  rounded-[20px] inline-block mt-2">
+                        <div class="w-[360px] h-[70px] pb-2 mt-2 ml-2">
+                            <img src="images/mountain_1.jpg" alt="" class="rounded-full  w-14 h-14">
+                        </div>
+                        <p class="ml-2 max-w-fit break-all text-xl font-mono">
+                           Trekking is awesome  
+                        </p>
+                    <div class="image h-[300px]  mt-16 flex justify-center">
+                        <img src="images/mountain_1.jpg" alt="" class="rounded-3xl w-[400px] -translate-y-10">
+                    </div>
+                    
+                    <div class="bg-gray-300 w-[405px] h-[70px] -translate-y-9 rounded-[20px]">
+                        <img src="images/like.png" class="cursor-pointer  w-8 mx-3  translate-y-1" alt="">
+                        <div class="ml-3 mt-2 inline-block">0</div>
+                    
+                        <img src="images/comments.jpg" class="cursor-pointer  w-8 mx-44  -translate-y-[52px]" alt="">
+                        <div class="ml-44 -translate-y-[47px] inline-block">0</div>
+                        
+                        <img src="images/share.jpg" class="cursor-pointer w-8 mx-[360px] -translate-y-[99px]" alt="">
+                        <div class="ml-[360px] -translate-y-[90px] inline-block">0</div>                
+<script src="Scripts/count.js"></script>                 
+</body>
+</html>
