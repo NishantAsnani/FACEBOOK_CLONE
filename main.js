@@ -14,7 +14,7 @@ const {storage, cloudinary}=require('./cloudinary');
 const { default: mongoose } = require('mongoose');
 const upload=multer({storage});
 const data=mongoose.model('data',imageSchema);
-const DB='mongodb+srv://Nishant:pfBrGqg9fBupzaCR@cluster0.lirwj3i.mongodb.net/?retryWrites=true&w=majority'
+const DB=`mongodb+srv://Nishant:${process.env.ATLAS_PASSWORD}@cluster0.lirwj3i.mongodb.net/?retryWrites=true&w=majority`
 const connectionParams={
     useNewUrlParser:true,
 }
