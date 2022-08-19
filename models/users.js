@@ -1,13 +1,4 @@
 const mongoose=require('mongoose');
-mongoose.connect('mongodb://localhost:27017/FACEBOOK_DB',{useNewUrlParser:true})
-.then(()=>{
-    console.log("MONGO CONNECTION OPEN")
-})
-
-.catch(err=>{
-    console.log("OH NO ERROR")
-    console.log(err)
-})
 
 const userSchema=new mongoose.Schema({
     Firstname:{
@@ -20,7 +11,8 @@ const userSchema=new mongoose.Schema({
     },
     email:{
         type:String,
-        required:true
+        required:true,
+        lowercase:true
     },
     password:{
         type:String,
@@ -40,8 +32,15 @@ const userSchema=new mongoose.Schema({
     },
     Gender:{
         type:String,
+        required:true
     }
 })
+
+
+userSchema.path('email').validate(async(email)=>{
+    const emailCount= await mongoose.models.user.countDocuments({email})
+    return !emailCount
+},'Email already exists')
 
 const user=mongoose.model('user',userSchema);
 module.exports=user;

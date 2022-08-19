@@ -14,11 +14,18 @@ const {storage, cloudinary}=require('./cloudinary');
 const { default: mongoose } = require('mongoose');
 const upload=multer({storage});
 const data=mongoose.model('data',imageSchema);
+const DB='mongodb+srv://Nishant:pfBrGqg9fBupzaCR@cluster0.lirwj3i.mongodb.net/?retryWrites=true&w=majority'
+const connectionParams={
+    useNewUrlParser:true,
+}
+mongoose.connect(DB,connectionParams).then(()=>{
+    console.log("Connected to database")
+})
 
 
 app.set('views',path.join(__dirname,'views'));
 app.set('view engine','ejs');
-config('dotenv').config()
+
 
 
 app.use(express.urlencoded({ extended: true }));
@@ -41,9 +48,6 @@ app.get('/mainpage',(req,res)=>{
     res.render('mainpage')
 })
 
-app.get('/uploads',(req,res)=>{
-    res.render('uploads')
-})
 
 app.post('/',async (req,res)=>{
     const {email,password}=req.body;
@@ -52,7 +56,9 @@ app.post('/',async (req,res)=>{
      if(!User)
     {
         res.render('error');
+        return;
     }
+       
     const validPassword=await bcrypt.compare(password,User.password);
     if(validPassword)
     {
