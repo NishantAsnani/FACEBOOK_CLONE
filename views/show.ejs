@@ -13,7 +13,13 @@
         <div class="search_pos flex justify-end translate-y-2 -translate-x-20  ">
             <input type="text" name="" id="" placeholder="search" class="inline-block search text-center rounded-3xl px-5 py-1">
             <div class=" icon translate-y-2 -translate-x-52"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.442 10.442a1 1 0 011.415 0l3.85 3.85a1 1 0 01-1.414 1.415l-3.85-3.85a1 1 0 010-1.415z" clip-rule="evenodd"></path><path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 100-11 5.5 5.5 0 000 11zM13 6.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z" clip-rule="evenodd"></path></svg></div>
+            <span>
+                <form action="/logout" method="post">
+                    <button type="submit" class="font-sans text-white text-lg  font-semibold ">Logout</button>
+                </form>
+            </span>
         </div>
+       
         <img src="images/Facebook_New_Logo_(2015).svg.png" class="h-[50px] -translate-y-[32px]" alt="">
         <ul class=" -translate-y-2 h-[781px] w-2/12 absolute border-2 inline-block transition-transform duration-[0.5s]">
             <img src="images/friends.png" class="items_image" alt=""><li class="items"> Friends </li> 
@@ -84,17 +90,17 @@
         <div class="ml-[360px] -translate-y-[90px] inline-block">0</div>
 
 
-
+      <% for(data of Image_Data) {%>
         <div class="-translate-x-72">
             <div class="card bg-white  rounded-[20px] inline-block mt-2">
                 <div class="w-[360px] h-[70px] pb-2 mt-2 ml-2">
-                    <img src="<%=Data.image%> " alt="" class="rounded-full w-14 h-14">
+                    <img src="<%=data.image%> " alt="" class="rounded-full w-14 h-14">
                 </div>
                 <p class="ml-2 max-w-fit break-all text-xl font-mono">
-                   <%=Data.description%>   
+                   <%=data.description%>   
                 </p>
             <div class="image h-[300px]  mt-16 flex justify-center">
-                <img src="<%=Data.image%> " alt="" class="rounded-3xl w-[400px] -translate-y-10">
+                <img src="<%=data.image%> " alt="" class="rounded-3xl w-[400px] -translate-y-10">
             </div>
             
             <div class="bg-gray-300 w-[405px] h-[70px] -translate-y-9 rounded-[20px]">
@@ -106,6 +112,8 @@
                 
                 <img src="images/share.jpg" class="cursor-pointer w-8 mx-[360px] -translate-y-[99px]" alt="">
                 <div class="ml-[360px] -translate-y-[90px] inline-block share_counter">0</div>
+                <% } %>
+                
 
                 <div class="-translate-x-72">
                     <div class="card bg-white  rounded-[20px] inline-block mt-2">

@@ -1,4 +1,5 @@
-if(process.env.NODE_ENV !=="production"){
+if(process.env.NODE_ENV !=="production")
+{
     require('dotenv').config();
 }
 console.log(process.env.SECRET);
@@ -14,7 +15,13 @@ const {storage, cloudinary}=require('./cloudinary');
 const { default: mongoose } = require('mongoose');
 const upload=multer({storage});
 const data=mongoose.model('data',imageSchema);
-const DB=`mongodb+srv://Nishant:${process.env.ATLAS_PASSWORD}@cluster0.lirwj3i.mongodb.net/?retryWrites=true&w=majority`
+const DB=`mongodb://${process.env.ATLAS_USER}:${process.env.ATLAS_PASSWORD}@ac-kzjtas6-shard-00-00.lirwj3i.mongodb.net:27017,ac-kzjtas6-shard-00-01.lirwj3i.mongodb.net:27017,ac-kzjtas6-shard-00-02.lirwj3i.mongodb.net:27017/?ssl=true&replicaSet=atlas-zg3epg-shard-0&authSource=admin&retryWrites=true&w=majority`
+const cors=require('cors');
+const session = require('express-session');
+const cookieParser = require('cookie-parser')
+const MongoDBStore = require("connect-mongodb-session")(session)
+
+
 const connectionParams={
     useNewUrlParser:true,
 }
@@ -22,11 +29,36 @@ mongoose.connect(DB,connectionParams).then(()=>{
     console.log("Connected to database")
 })
 
+app.use(cors())
+
+const mongoDBStore=new MongoDBStore({
+    uri:DB,
+    collections:'mySessions',
+})
+
+
+app.use(session({
+    secret:'jhvfnvrb',
+    store:mongoDBStore,
+    resave:false,
+    saveUninitialized:false,
+}));
+
 
 app.set('views',path.join(__dirname,'views'));
 app.set('view engine','ejs');
 
+const isAuth=(req,res,next)=>{
+    if(req.session.user)
+    {
+        next();
+    }
+    else
+    {
+        res.redirect('/')
+    }
 
+}
 
 app.use(express.urlencoded({ extended: true }));
 
@@ -44,9 +76,10 @@ app.get('/',(req,res)=>{
     res.render('login');
 })
 
-app.get('/mainpage',(req,res)=>{
+app.get('/mainpage',isAuth,(req,res)=>{
     res.render('mainpage')
 })
+
 
 
 app.post('/',async (req,res)=>{
@@ -62,6 +95,12 @@ app.post('/',async (req,res)=>{
     const validPassword=await bcrypt.compare(password,User.password);
     if(validPassword)
     {
+        const sessUser={
+            id:User.id,
+            email:User.email,
+            password:User.password
+        }
+        req.session.user=sessUser
         res.render('mainpage');
     }
 
@@ -91,15 +130,23 @@ app.post('/new',async(req,res)=>{
 
 app.post('/show',upload.single('data'),async(req,res)=>{
     const result= await cloudinary.uploader.upload(req.file.path);
-    const Data=new data({
+    let Data=new data({
         description:req.body.description,
-        image:result.secure_url
+        image:result.url
     })
     await Data.save().then(()=>{
         console.log("Image added");
     })
     .catch(err=>{
-        console.log("Oops error ",err);
+        console.log("Oops error",err);
     })
-res.render('show',{Data});
+    const Image_Data=await data.find({})
+    res.render('show',{Image_Data})
+})
+
+app.post('/logout',(req,res)=>{
+    req.session.destroy((err)=>{
+        if(err) throw err;
+        res.redirect('/')
+    })
 })
