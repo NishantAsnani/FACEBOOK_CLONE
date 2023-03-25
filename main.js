@@ -18,9 +18,8 @@ const data=mongoose.model('data',imageSchema);
 const DB=`mongodb://${process.env.ATLAS_USER}:${process.env.ATLAS_PASSWORD}@ac-kzjtas6-shard-00-00.lirwj3i.mongodb.net:27017,ac-kzjtas6-shard-00-01.lirwj3i.mongodb.net:27017,ac-kzjtas6-shard-00-02.lirwj3i.mongodb.net:27017/?ssl=true&replicaSet=atlas-zg3epg-shard-0&authSource=admin&retryWrites=true&w=majority`
 const cors=require('cors');
 const session = require('express-session');
-const cookieParser = require('cookie-parser')
 const MongoDBStore = require("connect-mongodb-session")(session)
-
+const methodOverride = require('method-override');
 
 const connectionParams={
     useNewUrlParser:true,
@@ -43,7 +42,7 @@ app.use(session({
     resave:false,
     saveUninitialized:false,
 }));
-
+app.use(methodOverride('_method'));
 
 app.set('views',path.join(__dirname,'views'));
 app.set('view engine','ejs');
@@ -80,6 +79,11 @@ app.get('/mainpage',isAuth,(req,res)=>{
     res.render('mainpage')
 })
 
+app.get('/show',isAuth,async(req,res)=>{
+    const Image_Data=await data.find({}).populate('author')
+    console.log(Image_Data)
+    res.render('show',{Image_Data})
+})
 
 
 app.post('/',async (req,res)=>{
@@ -132,7 +136,8 @@ app.post('/show',upload.single('data'),async(req,res)=>{
     const result= await cloudinary.uploader.upload(req.file.path);
     let Data=new data({
         description:req.body.description,
-        image:result.url
+        image:result.url,
+        author:'62ff5a562504e7ed228751eb' //Initially all posts by one user to be solved later.
     })
     await Data.save().then(()=>{
         console.log("Image added");
@@ -140,7 +145,7 @@ app.post('/show',upload.single('data'),async(req,res)=>{
     .catch(err=>{
         console.log("Oops error",err);
     })
-    const Image_Data=await data.find({})
+    const Image_Data=await data.find({}).populate('author')
     res.render('show',{Image_Data})
 })
 
@@ -149,4 +154,12 @@ app.post('/logout',(req,res)=>{
         if(err) throw err;
         res.redirect('/')
     })
+})
+
+app.post('/delete',async (req,res)=>{
+    const postId=req.body.postId
+    const delete_data=await data.findByIdAndDelete(postId)
+    console.log(postId)
+    console.log(delete_data)
+    res.redirect('/show')
 })

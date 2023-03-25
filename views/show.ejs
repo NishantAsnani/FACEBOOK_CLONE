@@ -79,6 +79,17 @@
         <img src="images/mountain_1.jpg" alt="" class="rounded-3xl w-[400px] -translate-y-10">
     </div>
     
+    <span>
+        <form action="/delete" method="post">
+            
+            <input type="hidden" name="postId" value="">
+            <button 
+            class="translate-y-[65px] translate-x-7 font-sans 
+            text-center bg-red-500 w-20 rounded-lg text-white font-semibold
+            hover:cursor-pointer" type="submit">
+            Delete</button>
+    </form>
+    </span>
     <div class="bg-gray-300 w-[405px] h-[70px] -translate-y-9 rounded-[20px]">
         <img src="images/like.png" class="cursor-pointer  w-8 mx-3  translate-y-1" alt="">
         <div class="ml-3 mt-2 inline-block">0</div>
@@ -89,19 +100,32 @@
         <img src="images/share.jpg" class="cursor-pointer w-8 mx-[360px] -translate-y-[99px]" alt="">
         <div class="ml-[360px] -translate-y-[90px] inline-block">0</div>
 
+        
+
 
       <% for(data of Image_Data) {%>
-        <div class="-translate-x-72">
+        <div class="-translate-x-30">
             <div class="card bg-white  rounded-[20px] inline-block mt-2">
                 <div class="w-[360px] h-[70px] pb-2 mt-2 ml-2">
                     <img src="<%=data.image%> " alt="" class="rounded-full w-14 h-14">
+                    <span class='mb-6'>Post by: <%=data.author.Firstname%></span>
                 </div>
-                <p class="ml-2 max-w-fit break-all text-xl font-mono">
+                <p class="ml-2 max-w-fit break-all text-xl font-mono mt-2">
                    <%=data.description%>   
                 </p>
             <div class="image h-[300px]  mt-16 flex justify-center">
                 <img src="<%=data.image%> " alt="" class="rounded-3xl w-[400px] -translate-y-10">
             </div>
+            <span>
+                <form action="/delete" method="post">
+                    <input type="hidden" name="postId" value="<%=data._id%>">
+                    <button 
+                    class="translate-y-[65px] translate-x-7  font-sans 
+                    text-center bg-red-500 w-20 rounded-lg text-white font-semibold
+                    hover:cursor-pointer"  type="submit">
+                    Delete</button>
+            </form>
+            </span>
             
             <div class="bg-gray-300 w-[405px] h-[70px] -translate-y-9 rounded-[20px]">
                 <img src="images/like.png" class="cursor-pointer  w-8 mx-3  translate-y-1 like_counter" alt="">
@@ -113,29 +137,7 @@
                 <img src="images/share.jpg" class="cursor-pointer w-8 mx-[360px] -translate-y-[99px]" alt="">
                 <div class="ml-[360px] -translate-y-[90px] inline-block share_counter">0</div>
                 <% } %>
-                
-
-                <div class="-translate-x-72">
-                    <div class="card bg-white  rounded-[20px] inline-block mt-2">
-                        <div class="w-[360px] h-[70px] pb-2 mt-2 ml-2">
-                            <img src="images/mountain_1.jpg" alt="" class="rounded-full  w-14 h-14">
-                        </div>
-                        <p class="ml-2 max-w-fit break-all text-xl font-mono">
-                           Trekking is awesome  
-                        </p>
-                    <div class="image h-[300px]  mt-16 flex justify-center">
-                        <img src="images/mountain_1.jpg" alt="" class="rounded-3xl w-[400px] -translate-y-10">
-                    </div>
-                    
-                    <div class="bg-gray-300 w-[405px] h-[70px] -translate-y-9 rounded-[20px]">
-                        <img src="images/like.png" class="cursor-pointer  w-8 mx-3  translate-y-1" alt="">
-                        <div class="ml-3 mt-2 inline-block">0</div>
-                    
-                        <img src="images/comments.jpg" class="cursor-pointer  w-8 mx-44  -translate-y-[52px]" alt="">
-                        <div class="ml-44 -translate-y-[47px] inline-block">0</div>
-                        
-                        <img src="images/share.jpg" class="cursor-pointer w-8 mx-[360px] -translate-y-[99px]" alt="">
-                        <div class="ml-[360px] -translate-y-[90px] inline-block">0</div>                
+                           
 <script src="Scripts/count.js"></script>                 
 </body>
 </html>
