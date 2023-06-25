@@ -81,7 +81,6 @@ app.get('/mainpage',isAuth,(req,res)=>{
 
 app.get('/show',isAuth,async(req,res)=>{
     const Image_Data=await data.find({}).populate('author')
-    console.log(Image_Data)
     res.render('show',{Image_Data})
 })
 
@@ -102,7 +101,8 @@ app.post('/',async (req,res)=>{
         const sessUser={
             id:User.id,
             email:User.email,
-            password:User.password
+            password:User.password,
+            Firstname:User.Firstname
         }
         req.session.user=sessUser
         res.render('mainpage');
@@ -136,9 +136,10 @@ app.post('/show',upload.single('data'),async(req,res)=>{
     const result= await cloudinary.uploader.upload(req.file.path);
     let Data=new data({
         description:req.body.description,
-        image:result.url,
-        author:'62ff5a562504e7ed228751eb' //Initially all posts by one user to be solved later.
+        image:result.url, //Initially all posts by one user to be solved later.
     })
+    data.author=req.session.user.id;
+    console.log(req.session.user)
     await Data.save().then(()=>{
         console.log("Image added");
     })
@@ -159,7 +160,5 @@ app.post('/logout',(req,res)=>{
 app.post('/delete',async (req,res)=>{
     const postId=req.body.postId
     const delete_data=await data.findByIdAndDelete(postId)
-    console.log(postId)
-    console.log(delete_data)
     res.redirect('/show')
 })
